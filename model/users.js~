@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var UsersSchema = new Schema({
   name: { type: String },
-  head: { type: String },
+  head: { type: String }
   mono: { type: String },
   desc: { type: String },
   join: { type: String },

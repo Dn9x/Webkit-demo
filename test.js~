@@ -1,0 +1,13 @@
+
+var spider = require('./spider');
+var util = require('util');
+
+spider.getu('dead_horse', function(){
+spider.getus('dead_horse', function(users){
+  users.forEach(function(user, index){
+      console.log(user.head);
+  });
+});
+});
+
+

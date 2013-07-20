@@ -161,9 +161,6 @@ function sp(cont){
     //获取首页有多少个帖子
     var count = $('div.topic_wrap').length;
 
-    //用于拼接有用数据
-    var data = '';
-
     //循环获取并处理
     for(var i=0;i<count;i++){
 	//获取头像链接
@@ -201,18 +198,28 @@ function sp2(cont){
     //加载整个文档，也就是上面抓取到的数据
     $ = cheerio.load(cont);
 
-    //用于拼接有用数据
-    var data = '';
-
     //获取人员名称
     var n = $('a.dark').html();
     var buf1 = new Buffer(n ,'binary');
     var name = iconv.decode(buf1 , 'utf-8'); 
+
+    //获取人员头像
+    var h = $('div.user_big_avatar img').attr('src');
+    var buf4 = new Buffer(h ,'binary');
+    var head = iconv.decode(buf4 , 'utf-8'); 
+
+	console.log('head ' + head);
     
     //获取个人介绍
     var m = $('div.user_profile p').html();
-    var buf2 = new Buffer(m ,'binary');
-    var mono = iconv.decode(buf2 , 'utf-8'); 
+    var mono = '';
+    if(m != null){
+      var buf2 = new Buffer(m ,'binary');
+      iconv.decode(buf2 , 'utf-8'); 
+    }
+
+
+	console.log('mono ' + mono);
 
     //获取加入论坛时间
     var j = $('p.col_fade').html();
@@ -220,7 +227,7 @@ function sp2(cont){
     var join = iconv.decode(buf3 , 'utf-8'); 
 
     //保存用户信息
-    saveu(name, mono, join);
+    saveu(name, head, mono, join);
 }
 
 function sp3(cont){
@@ -229,9 +236,6 @@ function sp3(cont){
 
     //获取首页有多少个帖子
     var count = $('div.cell').length;
-
-    //用于拼接有用数据
-    var data = '';
 
     //循环获取并处理
     for(var i=0;i<count;i++){
@@ -270,9 +274,6 @@ function sp4(cont){
     //获取首页有多少个帖子
     var count = $('div.cell').length;
 
-    //用于拼接有用数据
-    var data = '';
-
     //循环获取并处理
     for(var i=0;i<count;i++){
         console.log('i : ' + i);
@@ -309,7 +310,7 @@ function sp4(cont){
 function savet(tit, href, tim, repl, head){
   var title = new Tits({title: tit, href: href, head: head, replys: repl, times: tim});
     
-    title.remove(function(){
+    Tits.remove(function(){
 	title.save(function(err){
             if(err){
                 console.log('title error: %s', err);
@@ -322,10 +323,13 @@ function savet(tit, href, tim, repl, head){
 }
 
 //保存用户信息
-function saveu(name, mono, join){
-    var users = new Users({name: name, mono:mono, desc: '', join: join});
+function saveu(name, head, mono, join){
+    var users = new Users({name: name, head: head, mono:mono, desc: '', join: join});
 
-    users.remove(function(){
+
+	console.log('users' + users);
+
+    Users.remove(function(){
 	users.save(function(err){
             if(err){
                 console.log('users error: %s', err);
@@ -333,15 +337,14 @@ function saveu(name, mono, join){
 
             console.log('users save success');
         });
-    });
-    
+    });    
 }
 
 //保存我发布的
 function savec(tit, href, tim, repl, head){
     var cells = new Cells({title: tit, href: href, head: head, replys: repl, times: tim});
 
-    cells.remove(function(){
+    Cells.remove(function(){
 	cells.save(function(err){
             if(err){
                 console.log('cells error: %s', err);
@@ -352,10 +355,11 @@ function savec(tit, href, tim, repl, head){
     });
 }
 
+//保存我回复的
 function saver(tit, href, tim, repl, head){
     var repls = new Repls({title: tit, href: href, head: head, replys: repl, times: tim});
     
-    repls.remove(function(){
+    Cells.remove(function(){
 	repls.save(function(err){
             if(err){
                 console.log('cells error: %s', err);
