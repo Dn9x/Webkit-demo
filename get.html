@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Loading...</title>
+<link rel="stylesheet" type="text/css" href="pub/css/style.css">
+</head>
+<body>
+
+<div id='main'>
+	<div class="list3">
+		<img src="pub/images/loading.gif" />
+	</div>
+</div>
+<script src="pub/js/jquery-1.9.1.min.js"></script>
+<script>
+
+
+var spider = require('./spider');
+
+var async = require('async');
+
+var url = "http://cnodejs.org/?page=1";
+
+async.series([
+      function(next){
+        spider.getu('xiuxu123', function(){});
+
+        next();
+      }, function(next){
+        spider.gett(url, function(){});
+
+        next();
+      }, function(next){
+        spider.getc('xiuxu123', function(){
+        });
+
+        next();
+      }, function(next){
+        spider.getr('xiuxu123', function(){
+          ch();
+        });
+
+      }], function(err, values) {
+      console.log('async end : ' + values);
+    });
+
+function ch(){
+	window.location.href = "main.html";
+}
+
+</script>
+</body>
+</html>

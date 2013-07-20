@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>webkit demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="pub/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" type="text/css" href="pub/css/style.css">
+  </head>
+  <body>
+    <div id='main'>
+	  <form id="form" action="get.html" method="get">
+		<div class="list1">
+	   	  <img src="pub/images/logo.png" width="127" height="25" />
+		</div>
+		<div class="list2">
+		  <input type="text" name="name" placeholder="Your Name" class="text" />
+		</div>
+	  </form>
+	</div>
+  <div id="sd"></div>
+    <input type="button" id="send" value="get" />
+    <script src="pub/js/jquery-1.9.1.min.js"></script>
+    <script src="main.js"></script>
+    <script>
+      $(document).ready(function(){
+      	$("#send").click(function(){
+          $.get("http://cnodejs.org/user/nswbmw", function(data){
+            $("#sd").html(data);
+           });
+        });
+      })
+    </script>
+  </body>
+</html>
+
+
+Uncaught node.js Error
+
+TypeError: Cannot call method 'log' of null
+    at file:///tmp/.org.chromium.Chromium.d3S0vj/get.html?name=asdf:30:12
+    at IncomingMessage.<anonymous> (/tmp/.org.chromium.Chromium.d3S0vj/spider.js:37:13)
+    at IncomingMessage.EventEmitter.emit (events.js:117:20)
+    at _stream_readable.js:910:16
+    at process._tickCallback (node.js:351:13)

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Loading...</title>
+<link rel="stylesheet" type="text/css" href="pub/css/style.css">
+</head>
+<body>
+
+<div id='main'>
+	<div class="list4">
+		<div class="head">
+			<img src="pub/images/head.jpg" title="xiuxu123" />
+		</div>
+		<div class="info">
+			<span class="mono"></span>
+			<span class="join"></span>
+		</div>
+	</div>
+	<div class="list5">
+		<span title="home" class="tab">Home</span>
+		<span title="mono" class="tab">Post</span>
+		<span title="join" class="tab">Join</span>
+	</div>
+
+	<div id="mono" style="display:none;" class="list6">
+
+	</div>
+	<div id="home" class="list6">
+  
+	</div>
+
+	<div id="join" style="display:none;" class="list6">
+	</div>
+</div>
+<script src="pub/js/jquery-1.9.1.min.js"></script>
+<script>
+
+var spider = require('./spider');
+var util = require('util');
+
+spider.getus('xiuxu123', function(users){
+  users.forEach(function(user, index){
+      ch(user.mono, user.join);
+  });
+
+  spider.getcs(function(cells){
+  	cells.forEach(function(cell, index){
+      var msg = util.format('<div title="%s&nbsp;&nbsp;%s" class="msg"><div class="cont1"><img src="%s" /></div><div class="cont2">%s</div></div>', cell.replys, cell.times, cell.head, cell.title.substr(0, 24));
+
+      ch2(msg);
+  	});
+  });
+
+  spider.getts(function(tits){
+  	tits.forEach(function(tit, index){
+      var msg = util.format('<div title="%s&nbsp;&nbsp;%s" class="msg"><div class="cont1"><img src="%s" /></div><div class="cont2">%s</div></div>', tit.replys, tit.times, tit.head, tit.title.substr(0, 24));
+
+      ch1(msg);
+  	});
+  });
+
+  spider.getrs(function(repls){
+  	repls.forEach(function(repl, index){
+      var msg = util.format('<div title="%s&nbsp;&nbsp;%s" class="msg"><div class="cont1"><img src="%s" /></div><div class="cont2">%s</div></div>', repl.replys, repl.times, repl.head, repl.title.substr(0, 24));
+
+      ch3(msg);
+  	});
+  });
+  
+});
+
+function ch(mono, join){
+  $('.mono').html(mono.substr(0, 15));
+  $('.join').html(join);
+}
+
+function ch1(ct){
+  $('#home').append(ct);
+}
+
+function ch2(ct){
+  $('#mono').append(ct);
+}
+
+function ch3(ct){
+  $('#join').append(ct);
+}
+
+$(function(){
+
+	$(".tab").click(function(){
+		$(".tab").css({"background-color":"#fff", "border":"1px solid #ccc"});
+		$(this).css({"background-color":"#eee", "border-bottom":"0px"});
+
+		var id = "#" + $(this).attr("title");
+
+		$(".list6").hide();
+		$(id).show();
+	});
+  
+})
+
+</script>
+</body>
+</html>

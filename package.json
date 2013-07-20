@@ -1,0 +1,21 @@
+{
+  "name": "node-webkit demo",
+  "description": "this is about node-webkit demo",
+  "version": "0.0.1",
+  "main": "index.html",
+  "window": {
+  	"title": "webkit demo",
+    "icon": "pub/images/favicon.ico",
+    "toolbar": false,
+    "resizable" : false,
+    "always-on-top" : true,
+    "fullscreen" : false,
+    "position": "center",
+    "width": 240,
+    "height": 500,
+    "min_width": 240,
+    "min_height": 500,
+    "max_width": 240,
+    "max_height": 500
+  }
+}
