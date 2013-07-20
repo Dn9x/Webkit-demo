@@ -352,7 +352,6 @@ function savec(tit, href, tim, repl, head){
     });
 }
 
-//保存我回复的
 function saver(tit, href, tim, repl, head){
     var repls = new Repls({title: tit, href: href, head: head, replys: repl, times: tim});
     
